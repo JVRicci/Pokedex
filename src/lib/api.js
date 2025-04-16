@@ -1,15 +1,15 @@
 
 import api from '@/lib/axios'
 
-const pokemonListQuery = async (pokemonName = '') => {
+export const pokemonListQuery = async (pokemonName = '') => {
     try{
-        const response = await api.get('/pokemon')
+        const response = await api.get(pokemonName == '' ?  `/pokemon/${pokemonName}` : '/pokemon')
         const results = response.data.results
-        const promises = pokemonName === '' ?
-            results.map (pokemon => api.get(`/pokemon/${pokemon.name}`)) :
-            api.get(`/pokemon/${pokemonName}`)
+        const promises = results.map (pokemon => api.get(`/pokemon/${pokemonName ? pokemonName : pokemon.name}`)) 
 
         const details = await Promise.all(promises)
+
+        console.log(results)
 
         const pokemonData = details.map(res => ({
             name: res.data.name,
@@ -20,8 +20,7 @@ const pokemonListQuery = async (pokemonName = '') => {
         return pokemonData
     }
     catch(err){
-        console.log(err)
+        console.log("Erro na requisição:" ,err)
     }
 }
 
-export default pokemonListQuery

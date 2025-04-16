@@ -1,15 +1,14 @@
 import TextInput from "@/components/TextInput"
-import pokemonListQuery from "@/lib/api"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
+let awaitTime; 
 
 export default function Header({ onSearch }) {
 
     const [input, setInput] = useState('');
 
-    const handleChange = (e) => {
-        const value = e.target.value;
-        setInput(value);
-        onSearch(value); // ← envia a string pro pai
+    const handleKeyDown = (e) => {
+        if(e.key === 'Enter') onSearch(input); // ← envia a string pro pai
     };
 
     return (
@@ -25,7 +24,8 @@ export default function Header({ onSearch }) {
                 type = 'Text'
                 placeholder = 'Pesquisar' 
                 value = {input}
-                onChange = {handleChange} 
+                onChange = {(e) => setInput(e.target.value)}
+                onKeyDown = {handleKeyDown} 
                 />
             </div>
         </div>

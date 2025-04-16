@@ -1,13 +1,12 @@
 import { useState, useEffect} from 'react'
 import PokemonChar from './PokemonChar';
-import pokemonListQuery  from '@/lib/api'
 
 export default function PokemonList({pokemonList =''}) {
 
     // const [isLoading, setIsLoading] = useState(true)
     
-    // if (isLoading) return <p className='w-full flex '>Carregando Pokemons...</p>;
-
+    // if (isLoading) return <p className='text-center mt-8 '>Carregando Pokemons...</p>;
+    
     if (!Array.isArray(pokemonList)) {
         return <p className="text-center mt-8 text-red-500">Erro: Lista inválida</p>;
     }

@@ -1,34 +1,24 @@
 import { useState, useEffect} from 'react'
 import PokemonList from '@/components/PokemonList'
 import Header from './components/Header'
-import pokemonListQuery  from '@/lib/api'
+import {pokemonListQuery}  from '@/lib/api'
 
 export default function App() {
+  
     const [pokemonList, setPokemonList] = useState([]);
 
     useEffect(() => {
-      const fetchAllPokemon = async () => {
-              try {
-                  setPokemonList(await pokemonListQuery())
-              } catch (error) {
-                  console.error(error)
-              }
-          }
-          setPokemonList(fetchAllPokemon())
-      }, []);
+      handleChange()
+    }, []);
 
-      const handleChange = async (name) => {
-        if (!name || name.trim() === '') {
-          fetchAllPokemons(); // ← volta pra lista completa
-          return;
-        }
-        try {
-          const res = await pokemonListQuery(name)
-          setPokemonList(res);
-        } catch (err) {
-          setPokemonList([]); // limpa se não encontrar
-        }
+    const handleChange = async (name = '') => {
+      try {
+          setPokemonList(await pokemonListQuery(name))
+      } catch (error) {
+          console.error(error)
+      }
     };
+
       
 
   return (
